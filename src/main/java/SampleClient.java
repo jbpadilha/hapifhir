@@ -7,10 +7,7 @@ import org.hl7.fhir.r4.model.HumanName;
 import org.hl7.fhir.r4.model.Patient;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SampleClient {
 
@@ -21,6 +18,7 @@ public class SampleClient {
     }
 
     public static void printNamesBirth(Bundle bundle) {
+        bundle.getEntry().sort(Comparator.comparing(entry -> ((Patient) entry.getResource()).getName().get(0).getGivenAsSingleString()));
         bundle.getEntry().forEach(b -> {
             Patient patient = (Patient) b.getResource();
             // Given names:
